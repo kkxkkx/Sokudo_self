@@ -1,4 +1,3 @@
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -16,17 +15,18 @@ import java.util.regex.Pattern;
 */
 
 public class sudoku {
-	static int count; //需要输出数独的个数
-	public int curPos;// 当前处理的布局位置
-    public static final int fieldNum=9;
-    public static int Sum=0;
-    public byte[] layout = null;// 布局
-    public byte[] outbytes = null;
+	public static int count; //需要输出数独的个数
+	public int curr;// 当前处理的布局位置
+    public static final int side=9;
+    public static final int SideSub = 3;
+    public static final int init_num=6;
+
+    public boolean init_state=true;  //是否在输出第一种状态  
+    public byte[][] layout = null;// 布局
+    public byte[] ansFlag = null; //每个布局位置解空间使用标识（指向下一次要处理的解）
+    							  //处理过以后变为1
+    public byte[][] ans = null; //记录每个位置的解空间
     public Random random = new Random();
-    public byte[] ansPosArr = null;// 每个布局位置解空间使用标识（指向下一次要处理的解）
-    public byte[][] ansArr = null;// 记录每个位置的解空间
-    public boolean randomLayout = false;
-    public boolean init_state=true;  //是否在输出第一种状态
     
 		public static void main(String[] args) {
 			
@@ -53,7 +53,7 @@ public class sudoku {
 		    
 		    count=Integer.valueOf(args[1]);
 			sudoku sdk = new sudoku();
-			//count=2
+			//count=2;
 			sdk.generateRandom(count);
 		    
 		}
@@ -91,12 +91,11 @@ public class sudoku {
 	    * @throws
 	    */
 	    public void generateRandom(int count) {
-	        setRandomLayout(true);
 	        for (int i = 0; i < count; i++) {
 	            init();
-	            generate(1);
+	            generate();
 	        }
-	    }
+	    }	   
 	    
 		/**
 		* @Title: init
@@ -107,38 +106,38 @@ public class sudoku {
 		*/
 		public void init( )
 		{
-			curPos=0;
+
 			if(layout==null)
-				layout=new byte[fieldNum*fieldNum];
-			if (outbytes == null)
-	            outbytes = new byte[(fieldNum*fieldNum + 1) / 2];
-	        if (ansPosArr == null)
-	            ansPosArr = new byte[fieldNum*fieldNum];
-	        // 用来记录布局中某个位置的可能解
-	        if (ansArr == null)
-	            ansArr = new byte[fieldNum*fieldNum ][fieldNum];
-	        for (int i = 0; i < fieldNum*fieldNum; i++) {
-	            layout[i] = -1;// 将布局全部设置为未填状态
-	            ansPosArr[i] = 0;// 用来记录解的位置，回溯时从这个位置往后处理
-	            for (int j = 0; j < fieldNum; j++)
-	                ansArr[i][j] = -1;// 初始化为无解，程序运行中动态求取
-	        }
-			
+				layout=new byte[side][side];
+	        if (ansFlag == null)
+	            ansFlag = new byte[side*side];     
+	        if (ans == null)
+	            ans = new byte[side*side ][side];
+	        
+	        for (int i = 0; i < side; i++) {
+	        	for(int j=0;j<side;j++)
+	        		layout[i][j] = -1;// 将布局全部设置为未填状态	          
+	            ansFlag[i] = 0;// 用来记录解的位置，回溯时从这个位置往后处理	               
+	        }	        
+	        for(int i=0;i<side*side;i++)
+	        	for(int j=0;j<side;j++)
+	        		ans[i][j] = -1;// 初始化为无解，程序运行中动态求取
 		}
 		
 	    /**
-	    * @Title: outData
+	    * @Title: WriteToFile
 	    * @Description: 将当前布局写入文件
 	    * @param @param fw    
 	    * @return void    
 	    * @throws
 	    */
-	    public void outData(FileWriter fw) {
+	    public void WriteToFile(FileWriter fw) {
 	        try {
-	            for (int i = 0; i < fieldNum * fieldNum; i++) {
-	                fw.write(String.valueOf(layout[i] + 1));
-	                fw.write(" ");
-	                if ((i + 1) % fieldNum == 0)
+	            for (int i = 0; i < side ; i++) {
+	            	for(int j=0;j<side;j++){
+	            		fw.write(String.valueOf(layout[i][j]+1));
+	            		fw.write(" ");
+	            	}
 	                    fw.write("\n");
 	            }
 	            fw.write("\n");
@@ -147,23 +146,30 @@ public class sudoku {
 	    }
 
 	    /**
-	    * @Title: dealAnswer
+	    * @Title: RandomAnswer
 	    * @Description: 可用随机排序
-	    * @param @param pos    
+	    * @param @param curr    
 	    * @return void    
 	    * @throws
 	    */
-	    private void dealAnswer(int pos) {
+	    private void RandomAnswer(int curr) {
 	        // 随机调整一下顺序
-	        List<Byte> list = new LinkedList<Byte>();
-	        for (int i = 0; i < fieldNum; i++)
-	            list.add(ansArr[pos][i]);
-	        int rdm = 0, idx = 0;
+	    	List<Byte> list = new LinkedList<Byte>();
+	        for (int i = 0; i < side; i++)
+	            list.add(ans[curr][i]);
+	        int posi = 0, index = 0;
+	        if(curr==0)
+	        {
+	        	ans[0][0]=init_num;
+	        	list.remove(init_num);
+	            index++;
+	        }
 	        while (list.size() != 0) {
-	            rdm = Math.abs(random.nextInt()) % list.size();
-	            ansArr[pos][idx] = list.get(rdm);
-	            list.remove(rdm);
-	            idx++;
+	        	//posi是在list中的位置
+	            posi = Math.abs(random.nextInt()) % list.size();
+	            ans[curr][index] = list.get(posi);
+	            list.remove(posi);
+	            index++;
 	        }
 	        list = null;
 	    }
@@ -171,16 +177,16 @@ public class sudoku {
 	    /**
 	    * @Title: getAnswerCount
 	    * @Description: 获得解的数量
-	    * @param @param pos
+	    * @param @param curr
 	    * @param @return    
 	    * @return int    
 	    * @throws
 	    */
-	    private int getAnswerCount(int pos) {
+	    private int getAnswerCount(int curr) {
 	        // 计算可用解的数量
 	        int count = 0;
-	        for (int i = 0; i < fieldNum; i++)
-	            if (ansArr[pos][i] != -1)
+	        for (int i = 0; i < side; i++)
+	            if (ans[curr][i] != -1)
 	                count++;
 	        return count;
 	    }
@@ -208,63 +214,54 @@ public class sudoku {
 	    
 	    
 	    /**
-	    * @Title: openFileStream
-	    * @Description: 打开流，输出布局
-	    * @param @param name
-	    * @param @return    
-	    * @return FileOutputStream    
-	    * @throws
-	    */
-	    private FileOutputStream openFileStream(String name) {
-	        try {
-	            return new FileOutputStream(name);
-	        } catch (Exception e) {
-	        }
-	        return null;
-	    }
-	    
-	    
-	    /**
 	    * @Title: getAnswer
 	    * @Description: 返回值指定位置的可用解
-	    * @param @param pos    
+	    * @param @param curr    
 	    * @return void    
 	    * @throws
 	    */
-	    private void getAnswer(int pos) {
-	        for (byte i = 0; i < fieldNum; i++)
-	            ansArr[pos][i] = i;// 假定包含所有解
-	        // 去除已经包含的
-	        int x = pos / fieldNum, y = pos % fieldNum;
-	        for (int i = 0; i < fieldNum; i++) {
-	            if (layout[i * fieldNum + y] != -1)
-	                ansArr[pos][layout[i * fieldNum + y]] = -1;// 去除列中包含的元素
-	            if (layout[x * fieldNum + i] != -1)
-	                ansArr[pos][layout[x * fieldNum + i]] = -1;// 去除行中包含的元素
-	        }
-	        int subnum = (int) Math.sqrt(fieldNum);
-	        int x2 = x / subnum, y2 = y / subnum;
-	        // boolean bOver = false;//这个优化应该是没有问题的
-	        for (int i = x2 * subnum; i < subnum + x2 * subnum; i++) {
-	            // if (bOver)
-	            // break;
-	            for (int j = y2 * subnum; j < subnum + y2 * subnum; j++) {
-	                if (layout[i * fieldNum + j] != -1)
-	                    ansArr[pos][layout[i * fieldNum + j]] = -1;// 去小方格中包含的元素
+	    private void getAnswer(int curr) {
+	        for (byte i = 0; i < side; i++)
+	            ans[curr][i] =i; //假定包含所有解
+	        //在所有可能的解中出去该行或该列已经有的
+	        int x = curr / side, y = curr % side; //x是当前行，y是当前列
+	        for (int i = 0; i < side; i++) {
+	            if (layout[i][y] != -1) //该列所有数字
+	            {
+	            	ans[curr][layout[i][y]] = -1; //删去这个数字
+	            }	                
+	            if (layout[x][i] != -1)  //该行所有数字
+	            {
+	            	ans[curr][layout[x][i]] = -1;
+	            }         
+	        }	        
+	        //让在3X3的区域也互不相同
+	        int x2 = x / SideSub, y2 = y / SideSub;  //该位置在3X3区域的位置
+	        for (int i = x2 * SideSub; i < SideSub + x2 * SideSub; i++) {
+	            for (int j = y2 * SideSub; j < SideSub + y2 * SideSub; j++) {	        
+	                if (layout[i][j] != -1)
+	                    ans[curr][layout[i][j]] = -1; //删去在3X3中出现过的数字
 	            }
 	        }
-	        if (randomLayout == true)
-	            dealAnswer(pos);
+	        RandomAnswer(curr);
 	    }
 	    
-	    private byte getAnswerNum(int fieldPos, int ansPos) {
-	        // 返回指定布局方格中指定位置的解
+	    /**
+	    * @Title: getAnswerNum
+	    * @Description: 得到当前位置可能解的个数
+	    * @param @param curr
+	    * @param @param state
+	    * @param @return    
+	    * @return byte    
+	    * @throws
+	    */
+	    private byte getAnswerNum(int curr, int state) {
 	        int cnt = 0;
-	        for (int i = 0; i < fieldNum; i++) {
+	        for (int i = 0; i < side; i++) {
 	            // 找到指定位置的解，返回
-	            if (cnt == ansPos && ansArr[fieldPos][i] != -1)
-	                return ansArr[fieldPos][i];
-	            if (ansArr[fieldPos][i] != -1)
+	            if (cnt == state && ans[curr][i] != -1)
+	            	return ans[curr][i];
+	            if (ans[curr][i] != -1)
 	                cnt++;// 是解，调整计数器
 	        }
 	        return -1;// 没有找到，逻辑没有问题的话，应该不会出现这个情况
@@ -272,61 +269,46 @@ public class sudoku {
 	   
 	    /**
 	    * @Title: generate
-	    * @Description: 按顺序生产布局
+	    * @Description: 生成一种布局
 	    * @param @param layoutCount 生成的布局数
 	    * @param @return    
 	    * @return long  
 	    * @throws
 	    */
-	    public long generate(long layoutCount) {
-//	    	if(!init_state)
-//	    	{
-	    		FileWriter out = openFileWriter("layout.txt");
-//	    		init_state=true;
-//	    	}
-//	    	else
-//	    		FileOutputStream out = openFileStream("layout.txt");
-	        //如果要保存布局，把这个注释打开
-	        curPos = 0;   //当前处理的布局位置
-	        long count = 0;    
-	        Sum++;
-	        while (count < layoutCount || layoutCount == -1) {
-	            if (ansPosArr[curPos] == 0)  
-	                getAnswer(curPos);// 如果这个位置没有被回溯过，就不用重新计算解空间
-	            int ansCount = getAnswerCount(curPos);
-	            if (ansCount == ansPosArr[curPos] && curPos == 0)
-	                break;// 全部回溯完毕
+	    public long generate() {
+	    	FileWriter out = openFileWriter("layout.txt");
+	        curr = 0;   //当前处理的布局位置	       
+	        Boolean flag=true;
+	        while (flag) {
+	            if (ansFlag[curr] == 0)  
+	                getAnswer(curr); //如果这个位置没有被回溯过，就不用重新计算解空间
+	            int ansCount = getAnswerCount(curr);
+	            if (ansCount == ansFlag[curr] && curr == 0) // 全部回溯完毕
+	                break;
 	            if (ansCount == 0) {
-	                ansPosArr[curPos] = 0;// 无可用解，应该就是0
-	                // System.out.println("无可用解，回溯！");
-	                curPos--;
-	                layout[curPos] = -1;
+	                ansFlag[curr] = 0;// 无可用解，应该就是0
+	                curr--;
+	                layout[curr/side][curr%side] = -1;
 	                continue;
 	            }
 	            // 可用解用完
-	            else if (ansPosArr[curPos] == ansCount) {
-	                // System.out.println("可用解用完，回溯！");
-	                ansPosArr[curPos] = 0;
-	                curPos--;
-	                layout[curPos] = -1;
+	            else if (ansFlag[curr] == ansCount) {
+	                ansFlag[curr] = 0;
+	                curr--;
+	                layout[curr/side][curr%side] = -1;
 	                continue;
 	            } else {
 	                // 返回指定格格中，第几个解
-	                layout[curPos] = getAnswerNum(curPos, ansPosArr[curPos]);
-	                // System.out.println("位置："+curPos+"　填写："+layout[curPos]);
-	                ansPosArr[curPos]++;
-	                curPos++;
+	            	layout[curr/side][curr%side]= getAnswerNum(curr, ansFlag[curr]);
+	                ansFlag[curr++]++;
 	            }
-	            if (fieldNum * fieldNum == curPos) {
-	                // System.out.print("/n========"+count+"========");
-	                outData();
-	                System.out.println();
+	            if (side * side == curr) {
 	                if (out != null)
-	                    outData(out);
-	                count++;
-	                curPos--;
-	                layout[curPos] = -1;// 最后位置清空
-	                ansPosArr[curPos] = 1;// 解位置标识请零//人为促使继续回溯
+	                	WriteToFile(out);
+	                flag=false;
+	                curr--;
+	                layout[curr/side][curr%side] = -1; //最后位置清空
+	                ansFlag[curr] = 1;// 解位置标识请零,人为促使继续回溯
 	            }
 	        }
 	        try {
@@ -336,17 +318,5 @@ public class sudoku {
 	        System.out.println("处理完毕！共生成：" + count);
 	        return count;
 	    }
-	    
-	    public void setRandomLayout(boolean flag) {
-	        randomLayout = flag;
-	    }
-	    
-	    public void outData() {
-	        for (int i = 0; i < fieldNum * fieldNum; i++) {
-	            if (i % 9 == 0)
-	                System.out.println();
-	            System.out.print((layout[i] != -1 ? (layout[i] + 1) : " ") + " ");
-	        }
-	    }
-
 }
+
