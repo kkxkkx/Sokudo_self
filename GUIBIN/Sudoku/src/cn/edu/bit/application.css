@@ -1,0 +1,25 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.filternone1 {
+	
+     -fx-background-image: url('image/orig.jpg');
+     -fx-background-size: 130px;
+
+}
+.filternone2{
+	-fx-background-image: url('image/Gray.jpg');
+	-fx-background-size: 130px;
+}
+.filternone3{
+	-fx-background-image: url('image/Binary.jpg');
+	-fx-background-size: 130px;
+}
+.filternone4{
+	-fx-background-image: url('image/Red.jpg');
+	-fx-background-size: 130px;
+}
+.filternone5{
+	-fx-background-image: url('image/Blue.jpg');
+	-fx-background-size: 130px;
+}
+
+

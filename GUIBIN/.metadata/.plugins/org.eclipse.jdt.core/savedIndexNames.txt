@@ -1,20 +1,2 @@
 INDEX VERSION 1.131+D:\Learn\Third\software Engineering\Sokudo_self\GUIBIN\.metadata\.plugins\org.eclipse.jdt.core
 2476249805.index
-408374193.index
-859184743.index
-624719688.index
-1547799238.index
-1747868118.index
-1672231736.index
-1034915108.index
-238113842.index
-818672821.index
-1278893066.index
-3696381277.index
-4024401560.index
-3459745323.index
-3583339583.index
-2209873087.index
-1549649410.index
-2322410721.index
-1011015324.index

@@ -1,0 +1,20 @@
+/**  
+* @Title: main.java
+* @Package cn.edu.bit
+* @Description: TODO
+* @author WangKeXin 
+* @date 2019年12月25日 下午8:12:56
+* @version V1.0  
+*/
+package cn.edu.bit;
+
+/**
+* @ClassName: main
+* @Description: 主类，加载主页面
+* @author WangKeXin
+* @date 2019年12月25日 下午8:12:56
+*
+*/
+public class main extends application{
+
+}

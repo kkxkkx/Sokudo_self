@@ -6,25 +6,29 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="getPosiAnswer"/>
+		<item key="selection" value="start"/>
 		<list key="findhistory">
-			<item value="getPosiAnswer"/>
+			<item value="start"/>
+			<item value="select"/>
+			<item value="7"/>
+			<item value="8"/>
+			<item value="5"/>
+			<item value="1"/>
 			<item value="curr"/>
+			<item value="cu"/>
+			<item value="getPosiAnswer"/>
 			<item value="outbytes"/>
 			<item value="PosiAns"/>
 			<item value="pos"/>
 			<item value="dealAnswer"/>
 			<item value="getAnswer"/>
 			<item value="randomLayou"/>
-			<item value="fieldPos"/>
-			<item value="ansPos"/>
-			<item value="getAnswerNum"/>
-			<item value="posi_ans"/>
-			<item value="PosAns"/>
-			<item value="ansArr"/>
-			<item value="subnum"/>
 		</list>
 		<list key="replacehistory">
+			<item value="0"/>
+			<item value="Puz[curr]"/>
+			<item value="Puz[BlankNum]"/>
+			<item value="BlankNum"/>
 			<item value="curr_temp"/>
 			<item value="ansFlag"/>
 			<item value="FlagAns"/>
@@ -36,10 +40,6 @@
 			<item value="ans"/>
 			<item value="SideSub"/>
 			<item value="side"/>
-			<item value="SideNum"/>
-			<item value="nowPosition"/>
-			<item value="PosAns"/>
-			<item value="NowPosition"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

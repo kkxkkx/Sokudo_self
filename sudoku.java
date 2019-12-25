@@ -124,6 +124,7 @@ public class sudoku {
 			try {
 				while(count!=LastTime)
                 {
+					LastTime=count;
 					init();
                 	readPuzzle(temp);
     				SolvePuzzle();
@@ -244,7 +245,6 @@ public class sudoku {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

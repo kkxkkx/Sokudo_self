@@ -1,0 +1,20 @@
+/**  
+* @Title: application.java
+* @Package cn.edu.bit
+* @Description: TODO
+* @author WangKeXin 
+* @date 2019年12月25日 下午8:13:43
+* @version V1.0  
+*/
+package cn.edu.bit;
+
+/**
+* @ClassName: application
+* @Description: TODO(这里用一句话描述这个类的作用)
+* @author WangKeXin
+* @date 2019年12月25日 下午8:13:43
+*
+*/
+public class application {
+
+}
