@@ -1,3 +1,5 @@
+package cn.edu.bit;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +20,7 @@ import java.util.regex.Pattern;
  * @date 2019年12月23日 下午2:00:15
  *
  */
-public class sudoku {	
+public class Sudoku {	
 	public static final int side = 9;
 	public static final int SideSub = 3;
 	public static final int init_num = 6;
@@ -43,37 +45,37 @@ public class sudoku {
 	static String temp = "D:\\Learn\\Third\\software Engineering\\Sokudo_self\\Puzzle.txt";
 
 	public static void main(String[] args) {
-	    	if(!args[0].equals("-c")&&!args[0].equals("-s")){
-	    		PrintError();
-	    		return;
-	    	}
-	    	if(args[0].equals("-s")&&args.length != 3){
-	    			PrintError();
-	    	        return;  
-	    	}
-	    	else if(args[0].equals("-c")){
-	    		if (args.length != 2) {  
-	    			PrintError();
-	    	        return;  
-	    	    }
-	    		if(!isNumeric(args[1])){
-	    			PrintError();
-		    	}
-	    	}
+//	    	if(!args[0].equals("-c")&&!args[0].equals("-s")){
+//	    		PrintError();
+//	    		return;
+//	    	}
+//	    	if(args[0].equals("-s")&&args.length != 3){
+//	    			PrintError();
+//	    	        return;  
+//	    	}
+//	    	else if(args[0].equals("-c")){
+//	    		if (args.length != 2) {  
+//	    			PrintError();
+//	    	        return;  
+//	    	    }
+//	    		if(!isNumeric(args[1])){
+//	    			PrintError();
+//		    	}
+//	    	}
 	    
-		sudoku sdk = new sudoku();
-			if(args[0].equals("-c"))
-			{
-			    count=Integer.valueOf(args[1]);				
-				sdk.generateRandom(count);	
-				InputType=OUTPUT;
-			}
-			else if(args[0].equals("-s"))
-			{
+		Sudoku sdk = new Sudoku();
+//			if(args[0].equals("-c"))
+//			{
+//			    count=Integer.valueOf(args[1]);				
+//				sdk.generateRandom(count);	
+//				InputType=OUTPUT;
+//			}
+//			else if(args[0].equals("-s"))
+//			{
 				InputType = CALCULATE;
 				sdk.generateRandom(count);
-				temp=args[1];
-			}
+//				temp=args[1];
+//			}
 	}
 	/**
 	* @Title: PrintError
@@ -347,7 +349,6 @@ public class sudoku {
 				}
 				fw.write("\n");
 			}
-			fw.write("\n");
 		} catch (Exception e) {
 		}
 	}
