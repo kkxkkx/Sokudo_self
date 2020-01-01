@@ -298,20 +298,13 @@ public class sudoku {
 			int ansCount = getAnswerCount(curr);
 			if (ansCount == ansFlag[curr] && curr == 0) // 全部回溯完毕
 				break;
-			// 无可用解
-			if (ansCount == 0) {
+			// 无可用解   可用解用完
+			if (ansCount == 0 || ansFlag[curr] == ansCount) {
 				ansFlag[curr] = 0;
 				curr--;
 				layout[curr / side][curr % side] = -1;
 				continue;
-			}
-			// 可用解用完
-			else if (ansFlag[curr] == ansCount) {
-				ansFlag[curr] = 0;
-				curr--;
-				layout[curr / side][curr % side] = -1;
-				continue;
-			} else {
+			}else {
 				// 返回指定格格中，第几个解
 				layout[curr / side][curr % side] = getAnswer(curr, ansFlag[curr]);
 				ansFlag[curr++]++;
