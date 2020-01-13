@@ -1,12 +1,16 @@
 # Sudoku_self
-用命令行运行 BIN/文件夹下的sudoku.class
+##### 用命令行运行 BIN/文件夹下的sudoku.jar
 
-生成n(n是正整数)个不同的数独终局在BIN/文件夹下的layout.txt中
-  
-  java sudoku -c number   
-  
-求解某个txt文件中的数独（空白位置需要用0表示）
+##### 生成n个不同终局 (n<1000000)
 
-将解决方案保存在BIN/文件下的layout.txt中
+```
+java -jar sudoku.jar -c n
+```
 
-  java sudoku -s 某个txt文件的绝对路径
+##### 求解数独
+
+```
+java -jar sudoku.jar -s absolute_path_of_puzzlefile
+```
+
+##### sudoku文件中为命令行实现代码
