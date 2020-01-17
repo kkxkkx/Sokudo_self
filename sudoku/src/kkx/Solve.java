@@ -1,19 +1,37 @@
 package kkx;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Solve {
-	private char [] cache;
+	private char [] output;
 	private int [] data;
 	private int[][] map;
-	
-	public final static int nodeNum = 9 * 9 * 4 + 9 * 9 * 9 * 4 + 1;
-	public final static int colNum = 9 * 9 * 4;
+	//criterion前9位表示行，中间九位表示列，最后九位表示宫
+	//每个数可以转换成一个9位二进制数，0表示已经用过，1表示没有用过
+	private int[] criterion;
+	private int posi;
+	private int index;
+	private int goalNumber;
 	public final static int[] encode = { 1,2,4,8,16,32,64,128,256 };
-	
+
+	public int getGoalNumber(){return goalNumber;}
+	public int[] getCriterion(){return this.criterion;}
+	public void setCriterion(int []a){this.criterion=a;}
+	public void setData(int[] da){ this.data=da;System.out.println("data");}
 	public Solve()
 	{
+		index = 0;
+		posi = 0;
 		if(map==null)
 		{
 			map=new int[9][9];
+		}
+		if(criterion==null)
+		{
+			criterion=new int[27];
 		}
 		for(int i=0;i<9;i++)
 		{
@@ -23,141 +41,256 @@ public class Solve {
 			}
 		}
 	}
+
+	/**
+	 * @Title: getSolution
+	 * @Description: 返回数独的解决方法
+	 * @return char[]
+	 * @throws
+	 */
 	public char[] getSolution()
 	{
-		return this.cache;
+		return this.output;
 	}
-	public void FindSolution(String address) {
-		// TODO Auto-generated method stub
-		int i = 0;
-		int goalNumber, nowNumber, result,index;
-		String path;
-		path = address;
-		goalNumber = dealFile(path);
-		index = 0;
-		result = 0;
-		for (nowNumber = 0; nowNumber < goalNumber; nowNumber++) {
-			solveUnit(index);
-			toCache(nowNumber, result);
-		}
-		cache[result++] = '\0';
-		
-	}
-	
 
-	private void toCache(int nowNumber, int result) {
+	/**
+	 * @Title: FindSolution
+	 * @Description: 找到数独的答案
+	 * @param path
+	 * @return void
+	 * @throws
+	 */
+	public void FindSolution(String path) {
+		// TODO Auto-generated method stub
+		int nowNumber;
+		data=new int[1_000_000*81*2];
+		goalNumber = DealFile(path);
+		output=new char[goalNumber*81*3];
+		for (nowNumber = 0; nowNumber < goalNumber; nowNumber++) {
+			SolveSoduku();
+			WriteToOutput(nowNumber);
+		}
+	}
+
+
+	/**
+	 * @Title: WriteToOutput
+	 * @Description: 将数字变成char，存在output中
+	 * @param nowNumber
+	 * @param  nowNumber
+	 * @return void
+	 * @throws
+	 */
+	public void  WriteToOutput(int nowNumber) {
 		// TODO Auto-generated method stub
 		int i, j;
 		if (nowNumber != 0) {
-			cache[result++] = '\n';
+			output[posi++] = '\n';
+			output[posi++] = '\n';
 		}
 		for (i = 0; i < 9; i++) {
 			for (j = 0; j < 9; j++) {
 				if (j != 0) {
-					cache[result++] = ' ';
+					output[posi++] = ' ';
 				}
-				cache[result++] = (char) (map[i][j] + '0');
+				output[posi++] = (char) (map[i][j] + '0');
 			}
-			cache[result++] = '\n';
+			if(i==8)
+				break;
+			output[posi++] = '\n';
 		}
 		return;
 	}
 
-	private void solveUnit(int index) {
+	/**
+	 * @Title: SolveSoduku
+	 * @Description: 求解数独
+	 * @return void
+	 * @throws
+	 */
+	public void SolveSoduku() {
 		// TODO Auto-generated method stub
-		int[] criterion=new int[27];
-		initialB(criterion, index);
-		dealingB(criterion, 0, 0);
+		InitCriterion();
+		DealingCriterion(0, 0);
 		return;
 	}
 
-	private boolean dealingB(int[] criterion, int i, int j) {
+	/**
+	 * @Title: DealingCriterion
+	 * @Description: 回溯求解数独
+	 * @param  row
+	 * @param  col
+	 * @return boolean
+	 * @throws
+	 */
+	public boolean  DealingCriterion( int row, int col) {
 		// TODO Auto-generated method stub
-		int k;
+		//是否有0
 		boolean state = false;
-		for (; i < 9; i++) {
-			for (; j < 9; j++) {
-				if (map[i][j] == 0) {
+		for (; row < 9; row++) {
+			for (; col < 9; col++) {
+				if (map[row][col] == 0) {
 					state = true;
 					break;
 				}
 			}
-			if (state) {
+			if (state)
 				break;
-			}
-			j = 0;
+			col = 0;
 		}
 		if (!state) {
 			return true;
 		}
+
 		int value;
 		state = false;
-		for (k = 0; k < 9; k++) {
+		for (int k = 0; k < 9; k++) {
 			value = k + 1;
-			if (!fill(i + 1, j + 1, value, criterion)) {
+			if (!Fill(row , col, value)) {
 				continue;
 			}
-			map[i][j] = value;
-			removeA(criterion, i + 1, j + 1, value);
-			state = dealingB(criterion, i, j);
+			map[row][col] = value;
+			UsedNum( row , col, value);
+			state =  DealingCriterion(row, col);
 			if (state) {
 				break;
 			}
-			recoverA(criterion, i + 1, j + 1, value);
-			map[i][j] = 0;
+			//不符合条件
+			ReleaseNum(row , col, value);
+			map[row][col] = 0;
 		}
 		return state;
 	}
 
-	private boolean fill(int row, int col, int value, int[] criterion) {
+	/**
+	 * @Title: Fill
+	 * @Description: 判断是不是0
+	 * @param row
+	 * @param col
+	 * @param value
+	 * @return boolean
+	 * @throws
+	 */
+	public boolean Fill(int row, int col, int value) {
 		// TODO Auto-generated method stub
-		int temp = criterion[row - 1] & criterion[9 + col - 1] & criterion[18 + (getblock(row, col) - 1)] & encode[value - 1];
+		int temp = criterion[row] & criterion[9 + col] & criterion[18 + (GetBlock(row, col) - 1)] & encode[value - 1];
 		if (temp != 0) {
 			return true;
 		}
 		return false;
 	}
 
-	private void recoverA(int[] criterion, int row, int col, int value) {
+	/**
+	 * @Title: ReleaseNum
+	 * @Description: 放弃之前选择的数字，将二进制位变为0
+	 * @param row
+	 * @param col
+	 * @param value
+	 * @return void
+	 * @throws
+	 */
+	public void ReleaseNum(int row, int col, int value) {
 		// TODO Auto-generated method stub
-		criterion[0 + row - 1] = criterion[row - 1] | (encode[value - 1]);
-		criterion[9 + col - 1] = criterion[9 + col - 1] | (encode[value - 1]);
-		criterion[18 + (getblock(row, col) - 1)] = criterion[18 + (getblock(row, col) - 1)] | (encode[value - 1]);
-
-		
+		criterion[row] = criterion[row ] | (encode[value - 1]);
+		criterion[9 + col ] = criterion[9 + col] | (encode[value - 1]);
+		criterion[18 + (GetBlock(row, col) - 1)] = criterion[18 + (GetBlock(row, col) - 1)] | (encode[value - 1]);
 	}
 
-	private void initialB(int[] criterion, int index) {
+	/**
+	 * @Title: InitCriterion
+	 * @Description: 将现有数独用二进制表示
+	 * @return void
+	 * @throws
+	 */
+	public void InitCriterion() {
 		// TODO Auto-generated method stub
 		int i, j;
 		for (i = 0; i < 27; i++) {
-			criterion[i] = 511;
+			//二进制表示刚好9位，每一位都是1,1表示选过，0表示没有选过
+			criterion[i] = encode[8]*2-1;
 		}
 		for (i = 0; i < 9; i++) {
 			for (j = 0; j < 9; j++) {
 				map[i][j] = data[index++];
 				if (map[i][j] != 0) {
-					removeA(criterion, i + 1, j + 1, map[i][j]);
+					UsedNum(i , j , map[i][j]);
 				}
 			}
 		}
 	}
 
-	private void removeA(int[] criterion, int row, int col, int value) {
+	/**
+	 * @Title: UsedNum
+	 * @Description: 将九位二进制中使用过的数字设为0,
+	 * @param row
+	 * @param col
+	 * @param value
+	 * @return void
+	 * @throws
+	 */
+	public void UsedNum( int row, int col, int value) {
 		// TODO Auto-generated method stub
-		criterion[0 + row - 1] = criterion[row - 1] & (~encode[value - 1]);
-		criterion[9 + col - 1] = criterion[9 + col - 1] & (~encode[value - 1]);
-		criterion[18 + (getblock(row, col) - 1)] = criterion[18 + (getblock(row, col) - 1)] & (~encode[value - 1]);
+		//每一位进行与运算
+		criterion[row] = criterion[row] & (~encode[value - 1]);
+		criterion[9 + col ] = criterion[9 + col] & (~encode[value - 1]);
+
+		criterion[18 + (GetBlock(row, col) - 1)] = criterion[18 + (GetBlock(row, col) - 1)] & (~encode[value - 1]);
 	}
 
-	private int dealFile(String path) {
+	/**
+	 * @Title: DealFile
+	 * @Description: 读取文件中的数独
+	 * @param @param path
+	 * @return int
+	 * @throws
+	 */
+	public int DealFile(String path)  {
 		// TODO Auto-generated method stub
-		return 0;
+		int len = 0;
+		int number = 0;
+		int count=0;
+		File file = new File(path);
+		BufferedReader buffer;
+		try {
+			buffer = new BufferedReader(new FileReader(file));
+			String s=buffer.readLine();
+			while(s!=null)
+			{
+				boolean flag=true;
+				for (int i = 0; i < s.length(); i++) {
+					flag=false;
+					if (s.charAt(i) == ' ')
+						continue;
+					if(s.charAt(i)=='0')
+					{
+						data[len++]=0;
+					}
+					else
+						data[len++]=s.charAt(i)-'0';
+				}
+				if(flag)
+					number++;
+				s=buffer.readLine();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		number++;
+		return number;
 	}
 
-	int getblock(int row, int col)
+	/**
+	 * @Title: GetBlock
+	 * @Description: 得到当前坐标在低级宫
+	 * @param row
+	 * @param col
+	 * @return int
+	 * @throws
+	 */
+	public int GetBlock(int row, int col)
 	{
-		return (row - 1) / 3 * 3 + (col + 2) / 3;
+		return row  / 3 * 3 + (col + 3) / 3;
 	}
 
 }
