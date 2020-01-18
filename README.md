@@ -1,4 +1,4 @@
-# 软件工程个人项目
+# 软件工程个人项目-数独
 #### 用命令行运行 BIN/文件夹下的sudoku.jar
 
 #### 生成n个不同终局 (0<n<=1000000)
@@ -19,7 +19,7 @@ java -jar sudoku.jar -s absolute_path_of_puzzlefile
 java -jar sudokuGUI.jar
 ```
 
-<img src="D:\Learn\Third\software Engineering\commit_edition\UI.png" style="zoom:60%;" />
+<img src="https://github.com/kkxkkx/Sudoku_self/blob/master/src/sudokuGUI/UI.png" alt="Sample"  width="350" height="350">
 
 #### src文件中为实现代码
 
