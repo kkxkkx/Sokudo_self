@@ -1,8 +1,11 @@
-package test;
+package test.kkx;
 
 import kkx.Generate;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +15,8 @@ class GenerateTest {
     void generateSudoku() {
         Generate gen=new Generate();
         int num=1000;
-        Assert.assertEquals(true, gen.GenerateSudoku(num));
-        CheckGenerate(gen.getOutput(),num);
+        Assert.assertEquals(true, gen.generateSudoku(num));
+        checkGenerate(gen.getOutput(),num);
     }
 
     @Test
@@ -24,7 +27,7 @@ class GenerateTest {
         gen.setGoal(1);
         char[] out=new char[200];
         gen.setoutput(out);
-        Assert.assertEquals(true, gen.CreateSeed(1));
+        Assert.assertEquals(true, gen.createSeed(1));
         Assert.assertEquals(temp,gen.getSeed());
     }
 
@@ -34,7 +37,7 @@ class GenerateTest {
         gen.setGoal(1);
         char[] out=new char[200];
         gen.setoutput(out);
-        Assert.assertEquals(true,gen.CreateMap());
+        Assert.assertEquals(true,gen.createMap());
         int[][] temp={{5,1,2,7,8,9,3,4,6},
                 {3, 4 ,6, 5 ,1 ,2, 7, 8, 9},
                 {7 ,8 ,9, 3, 4 ,6, 5 ,1, 2},
@@ -44,20 +47,17 @@ class GenerateTest {
                 {1 ,2 ,5 ,8, 9, 7, 4 ,6 ,3},
                 {4 ,6 ,3 ,1, 2, 5 ,8 ,9, 7},
                 {8 ,9 ,7 ,4 ,6 ,3, 1, 2, 5}};
-        Assert.assertEquals(temp,gen.getSudoku());
+        for(int i=0;i<9;i++)
+        {
+            Assert.assertEquals(temp[i],gen.getSudoku()[i]);
+        }
     }
-
-    @Test
-    void changeIndex() {
-
-    }
-
 
     @Test
     void swap() {
         int[] a={1,2};
         Generate gen=new Generate();
-        gen.Swap(a,0,1);
+        gen.swap(a,0,1);
         assertEquals(2,a[0]);
         assertEquals(1,a[1]);
     }
@@ -68,7 +68,7 @@ class GenerateTest {
         gen.setPos(0);
         char[] out=new char[200];
         gen.setoutput(out);
-        int  a[][]={{1,2,3,4,5,6,7,8,9},
+        int[][]  a={{1,2,3,4,5,6,7,8,9},
                 {1,2,3,4,5,6,7,8,9},
                 {1,2,3,4,5,6,7,8,9},
                 {1,2,3,4,5,6,7,8,9},
@@ -88,15 +88,14 @@ class GenerateTest {
                 '1',' ','2',' ','3',' ','4',' ','5',' ','6',' ','7',' ','8',' ','9'
         };
         gen.setSudoku(a);
-        gen.WriteToOutput();
-      //  Assert.assertEquals(output,gen.getOutput());
+        gen.writeToOutput();
+        Assert.assertEquals(output,gen.getOutput());
     }
 
     boolean compare(int[][] a, int[][] b)
     {
-        int i, j;
-        for (i = 0; i < 9; i++) {
-            for (j = 0; j < 9; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 if (a[i][j] != b[i][j]) {
                     return true;
                 }
@@ -105,30 +104,35 @@ class GenerateTest {
         return false;
     }
 
-    boolean CheckGenerate(char[] result, int num)
+    boolean checkGenerate(char[] result, int num)
     {
         int[][][] map = new int[num][9][9];
-        int i, j, k;
         int index = 0;
-        for (i = 0; i < num; i++) {
-            for (j = 0; j < 9; j++) {
-                map[i][j] = new int[9];
-                for (k = 0; k < 9; k++) {
+        for (int i = 0; i < num; i++) {
+            for (int j = 0; j < 9; j++) {
+                for (int k = 0; k < 9; k++) {
                     while (result[index]<'1' || result[index]>'9')
                         index++;
                     map[i][j][k] = result[index++];
                 }
             }
         }
+        return checkSame( map, num);
+
+    }
+
+    private boolean checkSame(int[][][] map, int num) {
         boolean flag= true;
-        for (i = 0; i < num-1; i++) {
-            for (j = i + 1; j < num; j++) {
+        for (int i = 0; i < num-1; i++) {
+            for (int j = i + 1; j < num; j++) {
                 if (!compare(map[i], map[j])) {
                     flag = false;
-                    System.out.println("map:"+i+"&"+j);
+                    Logger logger=Logger.getLogger("GenerateTest");
+                    logger.setLevel(Level.SEVERE);
+                    String msg="map:"+i+"&"+j;
+                    logger.severe(msg);
                     break;
                 }
-                System.out.println("compare:"+i+"&"+j);
             }
             if (!flag)
                 break;

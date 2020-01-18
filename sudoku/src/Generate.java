@@ -2,9 +2,9 @@ package kkx;
 
 /**
  * @ClassName: Generate
- * @Description: Éú³É²»Í¬µÄÖÕ¾Ö
+ * @Description: ç”Ÿæˆä¸åŒçš„ç»ˆå±€
  * @author WangKeXin
- * @date 2020Äê1ÔÂ15ÈÕ ÏÂÎç9:10:25
+ * @date 2020å¹´1æœˆ15æ—¥ ä¸‹åˆ9:10:25
  *
  */
 public class Generate {
@@ -18,7 +18,7 @@ public class Generate {
 
 	/**
 	 * @Title: getOutput
-	 * @Description: ·µ»ØËùÓĞµÄÖÕ¾Ö
+	 * @Description: è¿”å›æ‰€æœ‰çš„ç»ˆå±€
 	 * @param @return
 	 * @return char[]
 	 * @throws
@@ -29,7 +29,7 @@ public class Generate {
 	}
 	public int[] getSeed(){return this.seed;}
 	public void setGoal(int goal){this.goalNum=goal;}
-	public void setPos(int Pos){this.posi=Pos;}
+	public void setPos(int pos){this.posi=pos;}
 	public void setoutput(char[] a){this.output=a;}
 	public int[][] getSudoku(){return sudoku;}
 	public void setSudoku(int [][] a){this.sudoku=a;}
@@ -45,60 +45,56 @@ public class Generate {
 	}
 
 	/**
-	 * @Title: GenerateSudoku
-	 * @Description: Éú³ÉÖÕ¾Ö
+	 * @Title: generateSudoku
+	 * @Description: ç”Ÿæˆç»ˆå±€
 	 * @param @param count
 	 * @param @return
 	 * @return boolean
 	 * @throws
 	 */
-	public boolean GenerateSudoku(int count)  {
-		// TODO Auto-generated method stub
+	public boolean generateSudoku(int count)  {
 		this.goalNum=count;
 		int temp=(9*9*2+1)*count;
 		output=new char[temp+100];
-		CreateSeed(1);
+		createSeed(1);
 		return true;
 	}
 
 	/**
-	 * @Title: CreateSeed
-	 * @Description: ½«µÚÒ»¹¬×÷ÎªÖÖ×Ó£¬´´ÔìÖÖ×Ó
+	 * @Title: createSeed
+	 * @Description: å°†ç¬¬ä¸€å®«ä½œä¸ºç§å­ï¼Œåˆ›é€ ç§å­
 	 * @param @param cursor
 	 * @param @return
 	 * @return boolean
 	 * @throws
 	 */
-	public boolean CreateSeed(int cursor) {
-		// TODO Auto-generated method stub
+	public boolean createSeed(int cursor) {
 		if(cursor==8)
 		{
-			CreateMap();
+			createMap();
 		}else {
 			for (int i = cursor; i <= 8; i++) {
-				Swap(seed,cursor,i);
-				CreateSeed(cursor + 1);
+				swap(seed,cursor,i);
+				createSeed(cursor + 1);
 				if (nowNum == goalNum) break;
-				Swap(seed, cursor, i);
+				swap(seed, cursor, i);
 			}
 		}
-		System.out.println(seed);
 		return true;
 	}
 
 	/**
-	 * @Title: CreateMap
-	 * @Description: Í¨¹ıÆ½ÒÆÉú³ÉÊı¶À
+	 * @Title: createMap
+	 * @Description: é€šè¿‡å¹³ç§»ç”Ÿæˆæ•°ç‹¬
 	 * @param @return
 	 * @return boolean
 	 * @throws
 	 */
-	public boolean CreateMap() {
-		// TODO Auto-generated method stub
+	public boolean createMap() {
 		int k=0;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				sudoku[i][j] = seed[k++];  //ÔÚµÚÒ»¹¬
+				sudoku[i][j] = seed[k++];  //åœ¨ç¬¬ä¸€å®«
 				for (int l = 0; l < 3; l++) {
 					for (int m = 0; m < 3; m++) {
 						sudoku[(i + m) % 3 + 3 * l][(j + l) % 3 + m * 3] = sudoku[i][j];
@@ -106,69 +102,65 @@ public class Generate {
 				}
 			}
 		}
-		Permutation();
+		permutation();
 		return true;
 	}
 
 	/**
 	 * @Title: Permutation
-	 * @Description: ¶ÔÖÕ¾ÖĞĞÁĞ½»»»
+	 * @Description: å¯¹ç»ˆå±€è¡Œåˆ—äº¤æ¢
 	 * @param
 	 * @return void
 	 * @throws
 	 */
-	public void Permutation() {
-		// TODO Auto-generated method stub
-		ChangeIndex(3, 5);
+	public void permutation() {
+		changeIndex(3, 5);
 	}
 
 	/**
 	 * @Title: changeIndex
-	 * @Description: ¶Ô¹¬ÄÚµÄĞĞÁĞ½øĞĞÈ«ÅÅÁĞ
+	 * @Description: å¯¹å®«å†…çš„è¡Œåˆ—è¿›è¡Œå…¨æ’åˆ—
 	 * @param @param a
 	 * @param @param start
 	 * @param @param end
 	 * @return void
 	 * @throws
 	 */
-	public void ChangeIndex( int start, int end) {
-		// TODO Auto-generated method stub
+	public void changeIndex( int start, int end) {
 		int i;
-		//·Ö¶Î½øĞĞÈ«ÅÅÁĞ
+		//åˆ†æ®µè¿›è¡Œå…¨æ’åˆ—
 		if (start == end) {
 			if (end == 5) {
-				ChangeIndex( 6, 8);
+				changeIndex( 6, 8);
 			}else if(end==8){
-				ChangeIndex( 12, 14);
+				changeIndex( 12, 14);
 			}else if(end==14){
-				ChangeIndex( 15, 17);
+				changeIndex( 15, 17);
 			}
 			else {
-				WriteToOutput();
+				writeToOutput();
 			}
 		}
 		else {
 			for (i = start; i <= end; i++) {
-				Swap(index, start, i);
-				ChangeIndex( start + 1, end);
+				swap(index, start, i);
+				changeIndex( start + 1, end);
 				if (nowNum == goalNum) break;
-				Swap(index, start, i);
+				swap(index, start, i);
 
 			}
 		}
-		return;
 	}
 	/**
 	 * @Title: swap
-	 * @Description: ¹¬ÄÚ½øĞĞÈ«ÅÅÁĞ
+	 * @Description: å®«å†…è¿›è¡Œå…¨æ’åˆ—
 	 * @param  array
 	 * @param  a
 	 * @param  b
 	 * @return void
 	 * @throws
 	 */
-	public void Swap(int[] array, int a, int b) {
-		// TODO Auto-generated method stub
+	public void swap(int[] array, int a, int b) {
 		int temp;
 		temp = array[a];
 		array[a] = array[b];
@@ -176,14 +168,13 @@ public class Generate {
 	}
 
 	/**
-	 * @Title: WritrToOutput
+	 * @Title: writrToOutput
 	 * @Description:
 	 * @param
 	 * @return void
 	 * @throws
 	 */
-	public void WriteToOutput() {
-		// TODO Auto-generated method stub
+	public void writeToOutput() {
 		if (nowNum > 0) {
 			output[posi++] = '\n';
 			output[posi++] = '\n';
@@ -203,6 +194,5 @@ public class Generate {
 			output[posi++] = '\n';
 		}
 		nowNum++;
-		return;
 	}
 }
