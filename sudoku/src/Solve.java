@@ -269,8 +269,8 @@ public class Solve {
 			}
 		} catch (IOException e) {
 			Logger logger=Logger.getLogger("SolveTest");
-			logger.setLevel(Level.SEVERE);
-			logger.severe(e.getMessage());
+			logger.setLevel(Level.INFO);
+			logger.info(e.getMessage());
 		}
 		number++;
 		return number;

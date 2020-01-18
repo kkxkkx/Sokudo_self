@@ -43,7 +43,7 @@ public class Main {
     }
 
     public static boolean whetherSolve(String[] args) {
-        if(args.length != 3)
+        if(args.length <=1)
         {
             System.out.println("求解数独命令为：java sudoku -s puzzle.txt的绝对路径");
             return false;
@@ -51,6 +51,7 @@ public class Main {
         File file = new File(args[1]);
         if(file.isDirectory()) {
             System.out.println("路径需指向一个txt文件");
+            return false;
         }
         return true;
     }
@@ -61,9 +62,9 @@ public class Main {
             return -1;
         }
         count=Integer.valueOf(args[1]);
-        if(count<0||count>1_000_000)
+        if(count<=0||count>1_000_000)
         {
-            System.out.println("能生成的终局在0~1,000,000之间");
+            System.out.println("能生成的终局在1-1,000,000之间");
             return -1;
         }
         return count;
