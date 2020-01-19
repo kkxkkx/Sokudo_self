@@ -142,12 +142,12 @@ public class Controller implements Initializable {
 
     @FXML private void showHelp() {
         new AlertInfo(AlertType.INFORMATION, "帮助",
-                "操作：方向键以及鼠标\n输入: 数字\n提交：判断当前数独是否正确\n答案: 显示当前数独的答案\n ").show();
+                "操作: 方向键以及鼠标\n输入: 数字\n提交: 判断当前数独是否正确\n答案: 显示当前数独的答案\n ").show();
     }
 
     @FXML private void showAbout() {
         new AlertInfo(AlertType.INFORMATION, "关于",
-                "Sudoku v0.1   2020-01-14\n邮箱：kkxdlyj@163.com").show();
+                "Sudoku v1.0   2020-01-16\n邮箱：kkxdlyj@163.com").show();
     }
 
     @FXML private void check()
