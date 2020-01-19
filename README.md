@@ -23,6 +23,9 @@ java -jar sudokuGUI.jar
 
 #### src文件中为实现代码
 
-#### src/sudoku 中为命令行代码
+#### src/sudoku 中为命令行实现代码
 
-#### src/sudokuGUI 中为GUI代码
+#### src/sudokuGUI 中为UI界面实现代码
+
+[博客](https://www.cnblogs.com/Natakkx/p/12208745.html)
+
