@@ -12,10 +12,6 @@ import java.util.Random;
  *
  */
 public class Generate {
-	public static final int side = 9;
-	public static final int SideSub = 3;
-	public static final int init_num = 6;
-
 	private int[][] layout = null;// 布局
 	private int[] ansFlag = null; // 每个布局位置解空间使用标识（指向下一次要处理的解）
 	private int[][] ans = null; // 记录每个位置的解空间
@@ -48,19 +44,19 @@ public class Generate {
 	public void init() {
 
 		if (ansFlag == null)
-			ansFlag = new int[side * side];
+			ansFlag = new int[9 * 9];
 		if (ans == null)
-			ans = new int[side * side][side];
+			ans = new int[9 * 9][9];
 		if (layout == null)
-			layout = new int[side][side];
+			layout = new int[9][9];
 
-		for (int i = 0; i < side; i++) {
-			for (int j = 0; j < side; j++)
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++)
 				layout[i][j] = -1;
 			ansFlag[i] = 0;
 		}
-		for (int i = 0; i < side * side; i++)
-			for (int j = 0; j < side; j++)
+		for (int i = 0; i < 9 * 9; i++)
+			for (int j = 0; j < 9; j++)
 				ans[i][j] = -1;
 	}
 
@@ -83,13 +79,13 @@ public class Generate {
 			if (ansCount == 0 || ansFlag[curr] == ansCount) {
 				ansFlag[curr] = 0;
 				curr--;
-				layout[curr / side][curr % side] = -1;
+				layout[curr / 9][curr % 9] = -1;
 				continue;
 			}else {
-				layout[curr / side][curr % side] = getAnswer(curr, ansFlag[curr]);
+				layout[curr / 9][curr % 9] = getAnswer(curr, ansFlag[curr]);
 				ansFlag[curr++]++;
 			}
-			if (side * side == curr) {
+			if (9 * 9 == curr) {
 				flag = false;
 				curr--;
 				ansFlag[curr] = 1;
@@ -107,7 +103,7 @@ public class Generate {
 	 */
 	private void RandomAnswer(int curr_temp) {
 		List<Integer> list = new LinkedList<Integer>();
-		for (int i = 0; i < side; i++)
+		for (int i = 0; i < 9; i++)
 			list.add(ans[curr_temp][i]);
 		int posi = 0, index = 0;
 		while (list.size() != 0) {
@@ -128,7 +124,7 @@ public class Generate {
 	 */
 	private int getAnswerCount(int curr_temp) {
 		int count = 0;
-		for (int i = 0; i < side; i++)
+		for (int i = 0; i < 9; i++)
 			if (ans[curr_temp][i] != -1)
 				count++;
 		return count;
@@ -142,18 +138,18 @@ public class Generate {
 	 * @throws
 	 */
 	private void getPosiAnswer(int curr_temp) {
-		for (byte i = 0; i < side; i++)
+		for (byte i = 0; i < 9; i++)
 			ans[curr_temp][i] = i;
-		int x = curr_temp / side, y = curr_temp % side;
-		for (int i = 0; i < side; i++) {
+		int x = curr_temp / 9, y = curr_temp % 9;
+		for (int i = 0; i < 9; i++) {
 			if (layout[i][y] != -1)
 				ans[curr_temp][layout[i][y]] = -1;
 			if (layout[x][i] != -1)
 				ans[curr_temp][layout[x][i]] = -1;
 		}
-		int x2 = x / SideSub, y2 = y / SideSub;
-		for (int i = x2 * SideSub; i < SideSub + x2 * SideSub; i++) {
-			for (int j = y2 * SideSub; j < SideSub + y2 * SideSub; j++) {
+		int x2 = x / 3, y2 = y / 3;
+		for (int i = x2 * 3; i < 3 + x2 * 3; i++) {
+			for (int j = y2 * 3; j < 3 + y2 * 3; j++) {
 				if (layout[i][j] != -1)
 					ans[curr_temp][layout[i][j]] = -1;
 			}
@@ -171,7 +167,7 @@ public class Generate {
 	 */
 	private int getAnswer(int curr_temp, int state) {
 		int cnt = 0;
-		for (int i = 0; i < side; i++) {
+		for (int i = 0; i < 9; i++) {
 			if (cnt == state && ans[curr_temp][i] != -1)
 				return ans[curr_temp][i];
 			if (ans[curr_temp][i] != -1)

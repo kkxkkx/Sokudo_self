@@ -173,7 +173,7 @@ public class Controller implements Initializable {
             }
         }
         Solve s=new Solve();
-        if(s.checkSolution(data,1))
+        if(s.checkSolution(data))
         {
             new AlertInfo(AlertType.INFORMATION, "恭喜",
                     "您的答案完全正确:)").show();

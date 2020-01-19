@@ -166,11 +166,10 @@ public class Solve {
 	* @Title: checkSolution
 	* @Description: ¼ì²é½á¹û
 	* @param  data
-	* @param  num
 	* @return boolean   
 	* @throws
 	*/
-	boolean checkSolution(int[] data, int num)
+	boolean checkSolution(int[] data)
 	{
 		int index=0;
 		int[] criterion=new int[27];
@@ -178,11 +177,9 @@ public class Solve {
 		for (int j = 0; j < 27; j++) {
 			criterion[j] = 511;
 		}
-		for (int i = 0; i < num; i++) {
-			s.setCriterion(criterion);
-			if(!checkSudoku(data,index,s,i))
-				return false;
-		}
+		s.setCriterion(criterion);
+		if(!checkSudoku(data,index,s))
+			return false;
 		return true;
 	}
 
@@ -192,11 +189,10 @@ public class Solve {
 	* @param  data
 	* @param  index
 	* @param  s
-	* @param  num  
 	* @return boolean   
 	* @throws
 	*/
-	private boolean checkSudoku(int[] data,int index,Solve s,int num) {
+	private boolean checkSudoku(int[] data,int index,Solve s) {
 		for (int j = 0; j < 9; j++) {
 			for (int k = 0; k < 9; k++) {
 				while (data[index]>9 || data[index]<1)
@@ -207,7 +203,7 @@ public class Solve {
 				if (!s.fill(j, k, temp)) {
 					Logger logger=Logger.getLogger("SolveTest");
 					logger.setLevel(Level.SEVERE);
-					String msg="map:"+(num+1)+"row:"+(j+1)+"clo:"+(k+1)+"value:"+temp;
+					String msg="row:"+(j+1)+"clo:"+(k+1)+"value:"+temp;
 					logger.severe(msg);
 					return false;
 				}else{
