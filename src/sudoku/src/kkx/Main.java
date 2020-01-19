@@ -13,10 +13,12 @@ import java.util.regex.Pattern;
 public class Main {
     private static  int count=0; //需要输出数独的个数
     public static void main(String[] args) {
+    	if(args.length==0)
+    	{
+    		printError();
+            return;
+    	}
         long startTime=System.currentTimeMillis();
-        args =new String[2];
-        args[0]="-c";
-        args[1]="1";
         if(args[0].equals("-c"))
         {
             count=whetherGenerate(args);
@@ -36,9 +38,7 @@ public class Main {
         }
         else
         {
-            System.out.println("您的输入不正确\n");
-            System.out.println("生成终局命令为：java sudoku -c 阿拉伯数字");
-            System.out.println("求解数独命令为：java sudoku -s puzzle.txt的绝对路径");
+        	printError();
             return;
         }
         long endTime=System.currentTimeMillis();
@@ -58,7 +58,13 @@ public class Main {
         }
         return true;
     }
-
+    
+    public static void printError()
+    {
+    	System.out.println("您的输入不正确\n");
+        System.out.println("生成终局命令为：java sudoku -c 阿拉伯数字");
+        System.out.println("求解数独命令为：java sudoku -s puzzle.txt的绝对路径");
+    }
     public static int whetherGenerate(String[] args) {
         if (args.length != 2||!isNumeric(args[1])) {
             System.out.println("生成终局命令为：java sudoku -c 阿拉伯数字");
