@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class SolveTest {
-    public static final String PATH="D:\\Learn\\Third\\software Engineering\\commit_edition\\Sudoku_self\\test.txt";
+    public static final String PATH="D:\\Learn\\Third\\test.txt";
     @Test
     void chooseCriterion()
     {

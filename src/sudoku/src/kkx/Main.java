@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
 public class Main {
     private static  int count=0; //需要输出数独的个数
     public static void main(String[] args) {
-        args=new String[2];
+        long startTime=System.currentTimeMillis();
+        args =new String[2];
         args[0]="-c";
         args[1]="1";
-        long startTime=System.currentTimeMillis();
         if(args[0].equals("-c"))
         {
             count=whetherGenerate(args);
