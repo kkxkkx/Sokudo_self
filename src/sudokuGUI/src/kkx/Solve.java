@@ -4,15 +4,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  * @ClassName: Solve
- * @Description: ÅĞ¶ÏËùÌî´ğ°¸ÊÇ·ñÕıÈ·
+ * @Description: åˆ¤æ–­æ‰€å¡«ç­”æ¡ˆæ˜¯å¦æ­£ç¡®
  * @author WangKeXin
- * @date 2020Äê01ÔÂ13ÈÕ ÏÂÎç9:40:20
+ * @date 2020å¹´01æœˆ13æ—¥ ä¸‹åˆ9:40:20
  *
  */
 public class Solve {
 	private int[][] map;
-	//criterionÇ°9Î»±íÊ¾ĞĞ£¬ÖĞ¼ä¾ÅÎ»±íÊ¾ÁĞ£¬×îºó¾ÅÎ»±íÊ¾¹¬
-	//Ã¿¸öÊı¿ÉÒÔ×ª»»³ÉÒ»¸ö9Î»¶ş½øÖÆÊı£¬0±íÊ¾ÒÑ¾­ÓÃ¹ı£¬1±íÊ¾Ã»ÓĞÓÃ¹ı
+	//criterionå‰9ä½è¡¨ç¤ºè¡Œï¼Œä¸­é—´ä¹ä½è¡¨ç¤ºåˆ—ï¼Œæœ€åä¹ä½è¡¨ç¤ºå®«
+	//æ¯ä¸ªæ•°å¯ä»¥è½¬æ¢æˆä¸€ä¸ª9ä½äºŒè¿›åˆ¶æ•°ï¼Œ0è¡¨ç¤ºå·²ç»ç”¨è¿‡ï¼Œ1è¡¨ç¤ºæ²¡æœ‰ç”¨è¿‡
 	private int[] criterion;
 	protected static final int[] encode = { 1,2,4,8,16,32,64,128,256 };
 
@@ -38,14 +38,14 @@ public class Solve {
 
 	/**
 	 * @Title: dealWithCriterion
-	 * @Description: ²éÕÒÊÇ·ñÓĞ¿ÕÎ»ÒªÇó½â
+	 * @Description: æŸ¥æ‰¾æ˜¯å¦æœ‰ç©ºä½è¦æ±‚è§£
 	 * @param  row
 	 * @param  col
 	 * @return boolean
 	 * @throws
 	 */
 	public boolean  dealWithCriterion( int row, int col) {
-		//Ã»ÓĞ¿ÕÎ»
+		//æ²¡æœ‰ç©ºä½
 		boolean state = false;
 		for (; row < 9; row++) {
 			for (; col < 9; col++) {
@@ -58,7 +58,7 @@ public class Solve {
 				break;
 			col = 0;
 		}
-		//Ã»ÓĞ¿ÕÎ»
+		//æ²¡æœ‰ç©ºä½
 		if (!state) {
 			return true;
 		}
@@ -67,7 +67,7 @@ public class Solve {
 
 	/**
 	 * @Title: chooseCriterion
-	 * @Description: »ØËİÑ¡ÔñºÏÊÊµÄÊı
+	 * @Description: å›æº¯é€‰æ‹©åˆé€‚çš„æ•°
 	 * @param row
 	 * @param col
 	 * @return boolean
@@ -96,7 +96,7 @@ public class Solve {
 
 	/**
 	 * @Title: fill
-	 * @Description: ÅĞ¶ÏÊÇ²»ÊÇ0
+	 * @Description: åˆ¤æ–­æ˜¯ä¸æ˜¯0
 	 * @param row
 	 * @param col
 	 * @param value
@@ -112,7 +112,7 @@ public class Solve {
 
 	/**
 	 * @Title: releaseNum
-	 * @Description: ·ÅÆúÖ®Ç°Ñ¡ÔñµÄÊı×Ö£¬½«¶ş½øÖÆÎ»±äÎª0
+	 * @Description: æ”¾å¼ƒä¹‹å‰é€‰æ‹©çš„æ•°å­—ï¼Œå°†äºŒè¿›åˆ¶ä½å˜ä¸º0
 	 * @param row
 	 * @param col
 	 * @param value
@@ -129,7 +129,7 @@ public class Solve {
 
 	/**
 	 * @Title: usedNum
-	 * @Description: ½«¾ÅÎ»¶ş½øÖÆÖĞÊ¹ÓÃ¹ıµÄÊı×ÖÉèÎª0,
+	 * @Description: å°†ä¹ä½äºŒè¿›åˆ¶ä¸­ä½¿ç”¨è¿‡çš„æ•°å­—è®¾ä¸º0,
 	 * @param row
 	 * @param col
 	 * @param value
@@ -137,7 +137,7 @@ public class Solve {
 	 * @throws
 	 */
 	public void usedNum( int row, int col, int value) {
-		//Ã¿Ò»Î»½øĞĞÓëÔËËã
+		//æ¯ä¸€ä½è¿›è¡Œä¸è¿ç®—
 		criterion[row] = criterion[row] & (~encode[value - 1]);
 		criterion[9 + col ] = criterion[9 + col] & (~encode[value - 1]);
 
@@ -147,7 +147,7 @@ public class Solve {
 
 	/**
 	 * @Title: getBlock
-	 * @Description: µÃµ½µ±Ç°×ø±êÔÚµÚ¼¸¹¬
+	 * @Description: å¾—åˆ°å½“å‰åæ ‡åœ¨ç¬¬å‡ å®«
 	 * @param row
 	 * @param col
 	 * @return int
@@ -160,7 +160,7 @@ public class Solve {
 
 	/**
 	 * @Title: checkSolution
-	 * @Description: ¼ì²é½á¹û
+	 * @Description: æ£€æŸ¥ç»“æœ
 	 * @param  data
 	 * @return boolean
 	 * @throws
@@ -182,7 +182,7 @@ public class Solve {
 
 	/**
 	 * @Title: checkSudoku
-	 * @Description: ¼ì²éÊı¶À´ğ°¸ÊÇ·ñÕıÈ·
+	 * @Description: æ£€æŸ¥æ•°ç‹¬ç­”æ¡ˆæ˜¯å¦æ­£ç¡®
 	 * @param  data
 	 * @param  index
 	 * @param  s

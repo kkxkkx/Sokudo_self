@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 
 /**
  * @ClassName: Controller
- * @Description: ÏàÓ¦UIÖĞµÄÊÂ¼ş
+ * @Description: ç›¸åº”UIä¸­çš„äº‹ä»¶
  * @author WangKeXin
- * @date 2020Äê01ÔÂ13ÈÕ ÏÂÎç9:20:15
+ * @date 2020å¹´01æœˆ13æ—¥ ä¸‹åˆ9:20:15
  *
  */
 public class Controller implements Initializable {
@@ -48,7 +48,7 @@ public class Controller implements Initializable {
 
     /**
      * @Title: setCellNums
-     * @Description: ½«Êı×Ö·ÅÔÚCellÖĞ
+     * @Description: å°†æ•°å­—æ”¾åœ¨Cellä¸­
      * @param puzzle
      * @param ans
      * @param solve
@@ -78,7 +78,7 @@ public class Controller implements Initializable {
 
     /**
      * @Title: initTimer
-     * @Description: ³õÊ¼»¯¼ÆÊ±Æ÷
+     * @Description: åˆå§‹åŒ–è®¡æ—¶å™¨
      * @return void
      * @throws
      */
@@ -141,21 +141,21 @@ public class Controller implements Initializable {
     }
 
     @FXML private void showHelp() {
-        new AlertInfo(AlertType.INFORMATION, "°ïÖú",
-                "²Ù×÷: ·½Ïò¼üÒÔ¼°Êó±ê\nÊäÈë: Êı×Ö\nÌá½»: ÅĞ¶Ïµ±Ç°Êı¶ÀÊÇ·ñÕıÈ·\n´ğ°¸: ÏÔÊ¾µ±Ç°Êı¶ÀµÄ´ğ°¸\n ").show();
+        new AlertInfo(AlertType.INFORMATION, "å¸®åŠ©",
+                "æ“ä½œ: æ–¹å‘é”®ä»¥åŠé¼ æ ‡\nè¾“å…¥: æ•°å­—\næäº¤: åˆ¤æ–­å½“å‰æ•°ç‹¬æ˜¯å¦æ­£ç¡®\nç­”æ¡ˆ: æ˜¾ç¤ºå½“å‰æ•°ç‹¬çš„ç­”æ¡ˆ\n ").show();
     }
 
     @FXML private void showAbout() {
-        new AlertInfo(AlertType.INFORMATION, "¹ØÓÚ",
-                "Sudoku v1.0   2020-01-16\nÓÊÏä£ºkkxdlyj@163.com").show();
+        new AlertInfo(AlertType.INFORMATION, "å…³äº",
+                "Sudoku v0.1   2020-01-14\né‚®ç®±ï¼škkxdlyj@163.com").show();
     }
 
     @FXML private void check()
     {
         if(!checkSuccess())
         {
-            new AlertInfo(AlertType.INFORMATION, "ÌáĞÑ",
-                    "Çë×ĞÏ¸¼ì²é£¬ÌîÁËËùÓĞ¿Õ²Å¿ÉÒÔÌá½»").show();
+            new AlertInfo(AlertType.INFORMATION, "æé†’",
+                    "è¯·ä»”ç»†æ£€æŸ¥ï¼Œå¡«äº†æ‰€æœ‰ç©ºæ‰å¯ä»¥æäº¤").show();
             return;
         }
         int num = 0;
@@ -176,11 +176,11 @@ public class Controller implements Initializable {
         Solve s=new Solve();
         if(s.checkSolution(data))
         {
-            new AlertInfo(AlertType.INFORMATION, "¹§Ï²",
-                    "ÄúµÄ´ğ°¸ÍêÈ«ÕıÈ·:)").show();
+            new AlertInfo(AlertType.INFORMATION, "æ­å–œ",
+                    "æ‚¨çš„ç­”æ¡ˆå®Œå…¨æ­£ç¡®:)").show();
         }else {
-            new AlertInfo(AlertType.INFORMATION, "ÌáĞÑ",
-                    "ÄúµÄ´ğ°¸ÖĞÓĞ´íÎó:(").show();
+            new AlertInfo(AlertType.INFORMATION, "æé†’",
+                    "æ‚¨çš„ç­”æ¡ˆä¸­æœ‰é”™è¯¯:(").show();
         }
     }
 

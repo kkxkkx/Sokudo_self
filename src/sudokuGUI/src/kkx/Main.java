@@ -22,7 +22,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		Main.primaryStage = primaryStage;
-		Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../ui/sample.fxml"));
 		Scene scene = new Scene(root, PRE_WIN_WIDTH, PRE_WIN_HEIGHT);
 		primaryStage.setTitle("Sudoku");
 		primaryStage.getIcons().add(new Image("/imgs/logo.png"));

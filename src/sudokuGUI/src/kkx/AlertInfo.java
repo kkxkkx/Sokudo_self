@@ -6,9 +6,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 /**
  * @ClassName: AlertInfo
- * @Description: ½øĞĞµ¯´°
+ * @Description: è¿›è¡Œå¼¹çª—
  * @author WangKeXin
- * @date 2020Äê01ÔÂ13ÈÕ ÏÂÎç6:18:25
+ * @date 2020å¹´01æœˆ13æ—¥ ä¸‹åˆ6:18:25
  *
  */
 class AlertInfo {

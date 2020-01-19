@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+D:\Learn\Third\software Engineering\demo\self\.metadata\.plugins\org.eclipse.jdt.core
+2892411924.index
+101253277.index

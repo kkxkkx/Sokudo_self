@@ -3,9 +3,9 @@ package kkx;
 import javafx.scene.control.Button;
 /**
  * @ClassName: Controller
- * @Description: Êı¶ÀÖĞÃ¿Ò»¸öĞ¡¸ñ×Ó
+ * @Description: æ•°ç‹¬ä¸­æ¯ä¸€ä¸ªå°æ ¼å­
  * @author WangKeXin
- * @date 2020Äê01ÔÂ13ÈÕ ÏÂÎç9:20:35
+ * @date 2020å¹´01æœˆ13æ—¥ ä¸‹åˆ9:20:35
  *
  */
 public class SudokuCell extends Button {
@@ -13,7 +13,7 @@ public class SudokuCell extends Button {
     private  boolean write;
 
     public void setWrite(boolean write) {
-            this.write = write;
+        this.write = write;
     }
 
     public boolean getWrite() {

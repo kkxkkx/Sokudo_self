@@ -6,17 +6,17 @@ import java.util.Random;
 
 /**
  * @ClassName: Generate
- * @Description: ½øĞĞÊı¶À²»Í¬¾ÖµÄÊä³ö
+ * @Description: è¿›è¡Œæ•°ç‹¬ä¸åŒå±€çš„è¾“å‡º
  * @author WangKeXin
- * @date 2019Äê12ÔÂ23ÈÕ ÏÂÎç2:00:15
+ * @date 2019å¹´12æœˆ23æ—¥ ä¸‹åˆ2:00:15
  *
  */
 public class Generate {
-	private int[][] layout = null;// ²¼¾Ö
-	private int[] ansFlag = null; // Ã¿¸ö²¼¾ÖÎ»ÖÃ½â¿Õ¼äÊ¹ÓÃ±êÊ¶£¨Ö¸ÏòÏÂÒ»´ÎÒª´¦ÀíµÄ½â£©
-	private int[][] ans = null; // ¼ÇÂ¼Ã¿¸öÎ»ÖÃµÄ½â¿Õ¼ä
+	private int[][] layout = null;// å¸ƒå±€
+	private int[] ansFlag = null; // æ¯ä¸ªå¸ƒå±€ä½ç½®è§£ç©ºé—´ä½¿ç”¨æ ‡è¯†ï¼ˆæŒ‡å‘ä¸‹ä¸€æ¬¡è¦å¤„ç†çš„è§£ï¼‰
+	private int[][] ans = null; // è®°å½•æ¯ä¸ªä½ç½®çš„è§£ç©ºé—´
 	private Random random = new Random();
-	private int curr;// µ±Ç°´¦ÀíµÄ²¼¾ÖÎ»ÖÃ
+	private int curr;// å½“å‰å¤„ç†çš„å¸ƒå±€ä½ç½®
 
 	public void generateRandom() {
 		init();
@@ -36,7 +36,7 @@ public class Generate {
 
 	/**
 	 * @Title: init
-	 * @Description: ³õÊ¼»¯¾ÖÃæ
+	 * @Description: åˆå§‹åŒ–å±€é¢
 	 * @param
 	 * @return void
 	 * @throws
@@ -62,7 +62,7 @@ public class Generate {
 
 	/**
 	 * @Title: generate
-	 * @Description: Éú³É²¼¾Ö
+	 * @Description: ç”Ÿæˆå¸ƒå±€
 	 * @param
 	 * @return void
 	 * @throws
@@ -96,7 +96,7 @@ public class Generate {
 
 	/**
 	 * @Title: RandomAnswer
-	 * @Description:Ëæ»úÅÅĞò
+	 * @Description:éšæœºæ’åº
 	 * @param currtemp
 	 * @return void
 	 * @throws
@@ -118,7 +118,7 @@ public class Generate {
 
 	/**
 	 * @Title: getAnswerCount
-	 * @Description: »ñµÃ½âµÄÊıÄ¿
+	 * @Description: è·å¾—è§£çš„æ•°ç›®
 	 * @param  currtemp
 	 * @return int
 	 * @throws
@@ -133,7 +133,7 @@ public class Generate {
 
 	/**
 	 * @Title: getPosiAnswer
-	 * @Description: ·µ»ØÖµÖ¸¶¨Î»ÖÃµÄ¿ÉÓÃ½â
+	 * @Description: è¿”å›å€¼æŒ‡å®šä½ç½®çš„å¯ç”¨è§£
 	 * @param  currtemp
 	 * @return void
 	 * @throws
@@ -162,7 +162,7 @@ public class Generate {
 
 	/**
 	 * @Title: getAnswer
-	 * @Description: µÃµ½µ±Ç°Î»ÖÃ¿ÉÄÜ½âµÄ¸öÊı
+	 * @Description: å¾—åˆ°å½“å‰ä½ç½®å¯èƒ½è§£çš„ä¸ªæ•°
 	 * @param  currtemp
 	 * @param  state
 	 * @return byte
@@ -181,7 +181,7 @@ public class Generate {
 
 	/**
 	 * @Title: dealAns
-	 * @Description: ¶Ô´ğ°¸½øĞĞÍÚ¿Õ
+	 * @Description: å¯¹ç­”æ¡ˆè¿›è¡ŒæŒ–ç©º
 	 * @param  answer
 	 * @return int[][]
 	 * @throws
@@ -210,7 +210,7 @@ public class Generate {
 
 	/**
 	 * @Title: getRowCol
-	 * @Description: µÃµ½µÚblockÖĞposiÎ»ÖÃ¶ÔÓ¦µÄºá×İ×ø±ê
+	 * @Description: å¾—åˆ°ç¬¬blockä¸­posiä½ç½®å¯¹åº”çš„æ¨ªçºµåæ ‡
 	 * @param posi
 	 * @param block
 	 * @return int[]
@@ -237,7 +237,7 @@ public class Generate {
 
 	/**
 	 * @Title: SomeRandom
-	 * @Description: ÔÚ1-9ÖĞËæ»ú»ñµÃ²»Í¬µÄnum¸öÊı
+	 * @Description: åœ¨1-9ä¸­éšæœºè·å¾—ä¸åŒçš„numä¸ªæ•°
 	 * @param  num
 	 * @return int[]
 	 * @throws
@@ -252,7 +252,7 @@ public class Generate {
 		int posi=0;
 		int i=0;
 		while (true) {
-			// posiÊÇÔÚlistÖĞµÄÎ»ÖÃ
+			// posiæ˜¯åœ¨listä¸­çš„ä½ç½®
 			int a=random.nextInt();
 			posi = Math.abs(a) % list.size();
 			temp[i++] = list.get(posi);
