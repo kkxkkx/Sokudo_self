@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @ClassName: Controller
@@ -27,13 +29,10 @@ public class Controller implements Initializable {
     private boolean stop;
     private long startTime;
     private long curTime;
-    private Thread thread;
 
     @FXML private Text timer;
     @FXML private List<kkx.SudokuCell> cells;
 
-    public Controller() {
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,21 +40,21 @@ public class Controller implements Initializable {
         Generate gen=new Generate();
         gen.generateRandom();
         answer=gen.getLayout();
-        prob=gen.DealAns(answer);
+        prob=gen.dealAns(answer);
         setCellNums(prob,answer,false);
     }
 
 
 
     /**
-    * @Title: setCellNums
-    * @Description: 将数字放在Cell中
-    * @param puzzle
-    * @param ans
-    * @param solve   
-    * @return void   
-    * @throws
-    */
+     * @Title: setCellNums
+     * @Description: 将数字放在Cell中
+     * @param puzzle
+     * @param ans
+     * @param solve
+     * @return void
+     * @throws
+     */
     private void setCellNums(int[][] puzzle,int[][] ans,boolean solve) {
         SudokuCell cell;
         for (int i = 0; i < 9; i++) {
@@ -71,22 +70,23 @@ public class Controller implements Initializable {
                         cell.wrapTextProperty().setValue(true);
                         cell.setText(Integer.toString(ans[i][j]));
                     }else
-                    cell.setText("");
+                        cell.setText("");
                 }
             }
         }
     }
 
     /**
-    * @Title: initTimer
-    * @Description: 初始化计时器
-    * @return void   
-    * @throws
-    */
+     * @Title: initTimer
+     * @Description: 初始化计时器
+     * @return void
+     * @throws
+     */
     private void initTimer() {
         stop = false;
         startTime = System.currentTimeMillis();
-        thread = new Thread() {
+        Thread thread = new Thread() {
+            @Override
             public void run() {
                 while (!stop) {
                     curTime = System.currentTimeMillis();
@@ -98,8 +98,11 @@ public class Controller implements Initializable {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Logger logger=Logger.getLogger("controller");
+                        logger.setLevel(Level.SEVERE);
+                        logger.severe(e.getMessage());
                     }
+
                 }
 
             }
@@ -111,9 +114,7 @@ public class Controller implements Initializable {
     @FXML private void keyListener(KeyEvent e) {
         String input = e.getText();
         SudokuCell cell = ((SudokuCell) e.getSource());
-        if (e.getCode() != KeyCode.ENTER && e.getCode() == KeyCode.SPACE) {
-
-        } else {
+        if (!(e.getCode() != KeyCode.ENTER && e.getCode() == KeyCode.SPACE)) {
             cell.setNoteText(input);
         }
     }
@@ -123,10 +124,10 @@ public class Controller implements Initializable {
         Generate gen=new Generate();
         gen.generateRandom();
         answer=gen.getLayout();
-        prob=gen.DealAns(answer);
+        prob=gen.dealAns(answer);
         setCellNums(prob,answer,false);
         initTimer();
-}
+    }
 
     @FXML private void solve() {
         setCellNums(this.prob,this.answer,true);
@@ -180,7 +181,6 @@ public class Controller implements Initializable {
         }else {
             new AlertInfo(AlertType.INFORMATION, "提醒",
                     "您的答案中有错误:(").show();
-            return;
         }
     }
 

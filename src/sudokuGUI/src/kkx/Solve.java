@@ -1,9 +1,5 @@
 package kkx;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -161,37 +157,38 @@ public class Solve {
 	{
 		return row  / 3 * 3 + (col + 3) / 3;
 	}
-	
+
 	/**
-	* @Title: checkSolution
-	* @Description: 检查结果
-	* @param  data
-	* @return boolean   
-	* @throws
-	*/
+	 * @Title: checkSolution
+	 * @Description: 检查结果
+	 * @param  data
+	 * @return boolean
+	 * @throws
+	 */
 	boolean checkSolution(int[] data)
 	{
 		int index=0;
-		int[] criterion=new int[27];
+		criterion=new int[27];
 		Solve s=new Solve();
 		for (int j = 0; j < 27; j++) {
 			criterion[j] = 511;
 		}
 		s.setCriterion(criterion);
+		boolean flag=true;
 		if(!checkSudoku(data,index,s))
-			return false;
-		return true;
+			flag=false;
+		return flag;
 	}
 
 	/**
-	* @Title: checkSudoku
-	* @Description: 检查数独答案是否正确
-	* @param  data
-	* @param  index
-	* @param  s
-	* @return boolean   
-	* @throws
-	*/
+	 * @Title: checkSudoku
+	 * @Description: 检查数独答案是否正确
+	 * @param  data
+	 * @param  index
+	 * @param  s
+	 * @return boolean
+	 * @throws
+	 */
 	private boolean checkSudoku(int[] data,int index,Solve s) {
 		for (int j = 0; j < 9; j++) {
 			for (int k = 0; k < 9; k++) {

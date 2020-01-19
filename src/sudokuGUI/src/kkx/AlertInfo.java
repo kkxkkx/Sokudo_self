@@ -26,7 +26,6 @@ class AlertInfo {
 
     void show() {
         Alert alert = new Alert(alertType);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
