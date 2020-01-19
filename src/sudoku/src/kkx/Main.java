@@ -111,7 +111,7 @@ public class Main {
         Logger logger=Logger.getLogger("main");
         logger.setLevel(Level.SEVERE);
         try {
-            fw = new FileWriter("layout.txt");
+            fw = new FileWriter("sudoku.txt");
             bufferedWriter= new BufferedWriter(fw);
             bufferedWriter.write(output);
             bufferedWriter.close();
