@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @ClassName: sudoku
+ * @ClassName: Generate
  * @Description: 进行数独不同局的输出
  * @author WangKeXin
  * @date 2019年12月23日 下午2:00:15
@@ -180,6 +180,13 @@ public class Generate {
 		return -1;
 	}
 
+	/**
+	* @Title: DealAns
+	* @Description: 对答案进行挖空
+	* @param  answer
+	* @return int[][]   
+	* @throws
+	*/
 	public int[][] DealAns(int[][] answer) {
 		int[][] prob=new int[9][9];
 		for(int i=0;i<9;i++)
@@ -205,6 +212,14 @@ public class Generate {
 		return prob;
 	}
 
+	/**
+	* @Title: getRowCol
+	* @Description: 得到第block中posi位置对应的横纵坐标
+	* @param posi
+	* @param block  
+	* @return int[]   
+	* @throws
+	*/
 	private int[] getRowCol(int posi,int block) {
 		int[] temp=new int[2];
 		if(block<3)
@@ -224,6 +239,13 @@ public class Generate {
 		return temp;
 	}
 
+	/**
+	* @Title: SomeRandom
+	* @Description: 在1-9中随机获得不同的num个数
+	* @param  num
+	* @return int[]   
+	* @throws
+	*/
 	private int[] SomeRandom(int num) {
 		int[] temp=new int[num];
 		List<Integer> list = new LinkedList<Integer>();

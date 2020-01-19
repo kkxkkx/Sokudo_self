@@ -47,6 +47,15 @@ public class Controller implements Initializable {
 
 
 
+    /**
+    * @Title: setCellNums
+    * @Description: 将数字放在Cell中
+    * @param puzzle
+    * @param ans
+    * @param solve   
+    * @return void   
+    * @throws
+    */
     private void setCellNums(int[][] puzzle,int[][] ans,boolean solve) {
         SudokuCell cell;
         for (int i = 0; i < 9; i++) {
@@ -68,6 +77,12 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+    * @Title: initTimer
+    * @Description: 初始化计时器
+    * @return void   
+    * @throws
+    */
     private void initTimer() {
         stop = false;
         startTime = System.currentTimeMillis();

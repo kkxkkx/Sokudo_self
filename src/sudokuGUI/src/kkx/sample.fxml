@@ -27,7 +27,7 @@
 
                 <MenuBar fx:id="menuBar" GridPane.columnSpan="4">
                     <menus>
-                        <Menu mnemonicParsing="false" text="文件">
+                        <Menu mnemonicParsing="false" text="开始">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#newGame" text="新游戏" />
                                 <MenuItem mnemonicParsing="false" onAction="#check" text="提交" />

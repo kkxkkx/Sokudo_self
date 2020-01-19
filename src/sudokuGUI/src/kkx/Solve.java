@@ -151,7 +151,7 @@ public class Solve {
 
 	/**
 	 * @Title: getBlock
-	 * @Description: 得到当前坐标在低级宫
+	 * @Description: 得到当前坐标在第几宫
 	 * @param row
 	 * @param col
 	 * @return int
@@ -161,6 +161,15 @@ public class Solve {
 	{
 		return row  / 3 * 3 + (col + 3) / 3;
 	}
+	
+	/**
+	* @Title: checkSolution
+	* @Description: 检查结果
+	* @param  data
+	* @param  num
+	* @return boolean   
+	* @throws
+	*/
 	boolean checkSolution(int[] data, int num)
 	{
 		int index=0;
@@ -177,6 +186,16 @@ public class Solve {
 		return true;
 	}
 
+	/**
+	* @Title: checkSudoku
+	* @Description: 检查数独答案是否正确
+	* @param  data
+	* @param  index
+	* @param  s
+	* @param  num  
+	* @return boolean   
+	* @throws
+	*/
 	private boolean checkSudoku(int[] data,int index,Solve s,int num) {
 		for (int j = 0; j < 9; j++) {
 			for (int k = 0; k < 9; k++) {
